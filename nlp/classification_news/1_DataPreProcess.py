@@ -1,20 +1,20 @@
 import numpy as np
 
 # 字典
-# 文章字典
+# 文章字典{'文章类型':出现次数}
 ArticleDic = {}
-# 类型字典
+# 类型字典{'文章类型':{词语id:词频}}
 ClassDic = {}
-# 词语字典
+# 词语字典{词语id:词频}
 WordDic = {}
-# 文章词语字典
-ArticleWordDic = {}
+# 文章词语字典{'文章类型':总词数}
+ClassWordCount = {}
 
 # 概率
-# 文章先验概率
+# 文章先验概率{'文章类型':先验概率}
 ClassicProb = {}
-# 词语先验概率
-WordProb = {}
+# 词语先验概率{'文章类型':{'词语id':先验概率}}
+ClassWordProb = {}
 
 # 训练数据
 file = open("./train_set_simple.csv", "r")
@@ -32,6 +32,7 @@ def load_data():
             if label not in ArticleDic:
                 ArticleDic[label] = 1
                 ClassDic[label] = {}
+                ClassWordCount[label] = 0
             else:
                 ArticleDic[label] += 1
 
@@ -49,9 +50,12 @@ def load_data():
                 else:
                     WordDic[word] += 1
 
-    np.save("ArticleDic.npy", ArticleDic)
-    np.save("ClassDicFile.npy", ClassDic)
-    np.save("WordDicFile.npy", WordDic)
+            ClassWordCount[label] = len(words) + ClassWordCount[label]
+
+    # np.save("ArticleDic.npy", ArticleDic)
+    # np.save("ClassDicFile.npy", ClassDic)
+    # np.save("WordDicFile.npy", WordDic)
+    # np.save("ClassWordCountFile.npy", ClassWordCount)
 
 
 def calculate_model():
@@ -62,17 +66,21 @@ def calculate_model():
 
     for word in WordDic:
         wordSum += WordDic[word]
-    ArticleDic
+
     for label in ArticleDic:
         articleSum += ArticleDic[label]
 
     # step1 各类文章先验概率
     for label in ArticleDic:
-        ClassicProb[label] = label / articleSum
+        ClassicProb[label] = ArticleDic[label] / articleSum
 
-        # step2 各类文章中每个词语的先验概率
-        for label in ClassDic:
-            articleSum += ClassDic[label]
+    # step2 各类文章中每个词语的先验概率
+    for label in ClassDic:
+        if label not in ClassWordProb:
+            ClassWordProb[label] = {}
+
+        for word_id in ClassDic[label]:
+            ClassWordProb[label][word_id] = ClassDic[label][word_id] / ClassWordCount[label]
 
 
 load_data()
