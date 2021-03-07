@@ -15,9 +15,13 @@ ClassWordCount = {}
 ClassicProb = {}
 # 词语先验概率{'文章类型':{'词语id':先验概率}}
 ClassWordProb = {}
+# 初始频率，未出现过的词的词频
+DefaultFreq = 0.1
+# 初始概率，未出现过的词的概率{'文章类型':默认先验概率}
+DefaultPriorProb = {}
 
 # 训练数据
-file = open("./train_set_simple.csv", "r")
+file = open("./simple_train.csv", "r")
 
 
 # 读取训练数据
@@ -79,11 +83,15 @@ def calculate_model():
         if label not in ClassWordProb:
             ClassWordProb[label] = {}
 
-        for word_id in ClassDic[label]:
-            ClassWordProb[label][word_id] = ClassDic[label][word_id] / ClassWordCount[label]
+        for word in ClassDic[label]:
+            ClassWordProb[label][word] = ClassDic[label][word] / ClassWordCount[label]
+
+    # step3 各类文章未出现词汇的先验概率
+    DefaultPriorProb[label] = DefaultFreq / ClassWordCount[label]
 
     np.save("FileClassWordProb.npy", ClassWordProb)
     np.save("FileClassicProb.npy", ClassicProb)
+    np.save("FileDefaultPriorProb.npy", DefaultPriorProb)
 
 
 load_data()
