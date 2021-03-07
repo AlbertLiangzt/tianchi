@@ -86,8 +86,8 @@ def calculate_model():
         for word in ClassDic[label]:
             ClassWordProb[label][word] = ClassDic[label][word] / ClassWordCount[label]
 
-    # step3 各类文章未出现词汇的先验概率
-    DefaultPriorProb[label] = DefaultFreq / ClassWordCount[label]
+        # step3 各类文章未出现词汇的先验概率
+        DefaultPriorProb[label] = DefaultFreq / ClassWordCount[label]
 
     np.save("FileClassWordProb.npy", ClassWordProb)
     np.save("FileClassicProb.npy", ClassicProb)
