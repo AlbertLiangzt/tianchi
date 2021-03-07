@@ -52,10 +52,10 @@ def load_data():
 
             ClassWordCount[label] = len(words) + ClassWordCount[label]
 
-    # np.save("ArticleDic.npy", ArticleDic)
-    # np.save("ClassDicFile.npy", ClassDic)
-    # np.save("WordDicFile.npy", WordDic)
-    # np.save("ClassWordCountFile.npy", ClassWordCount)
+    np.save("FileArticleDic.npy", ArticleDic)
+    np.save("FileClassDic.npy", ClassDic)
+    np.save("FileWordDic.npy", WordDic)
+    np.save("FileClassWordCount.npy", ClassWordCount)
 
 
 def calculate_model():
@@ -81,6 +81,9 @@ def calculate_model():
 
         for word_id in ClassDic[label]:
             ClassWordProb[label][word_id] = ClassDic[label][word_id] / ClassWordCount[label]
+
+    np.save("FileClassWordProb.npy", ClassWordProb)
+    np.save("FileClassicProb.npy", ClassicProb)
 
 
 load_data()
