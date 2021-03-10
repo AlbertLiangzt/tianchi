@@ -9,8 +9,14 @@ ClassicProb = {}
 ClassWordProb = {}
 # 初始概率，未出现过的词的概率{'文章类型':默认先验概率}
 DefaultPriorProb = {}
+# 结果
+ResultList = []
 
-file = open("./simple_test.csv", "r")
+# 截取的部分数据
+# file = open("./simple_test.csv", "r")
+# ResultFile = "./simple_res.csv"
+file = open("./test_a.csv", "r")
+ResultFile = "./test_res.csv"
 
 
 def load_model():
@@ -42,8 +48,21 @@ def evaluate():
             max_predict_score = max(score_dic.values())
             for label in score_dic.keys():
                 if score_dic[label] == max_predict_score:
-                    print(label)
+                    ResultList.append(label)
+
+
+def output_result():
+    i = 0
+    outfile = open(ResultFile, 'w')
+    outfile.write("label")
+    outfile.write('\n')
+    while i < len(ResultList):
+        outfile.write(str(ResultList[i]))
+        outfile.write('\n')
+        i += 1
+    outfile.close()
 
 
 load_model()
 evaluate()
+output_result()

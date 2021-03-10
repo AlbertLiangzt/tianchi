@@ -20,8 +20,10 @@ DefaultFreq = 0.1
 # 初始概率，未出现过的词的概率{'文章类型':默认先验概率}
 DefaultPriorProb = {}
 
+# 截取的部分数据
 # 训练数据
-file = open("./simple_train.csv", "r")
+# file = open("./simple_train.csv", "r")
+file = open("./train_set.csv", "r")
 
 
 # 读取训练数据
