@@ -37,7 +37,7 @@ def evaluate():
             # 测试分数{'文章类型':预测分数}
             score_dic = {}
             for label in ClassWordProb.keys():
-                score_dic[label] = 0
+                score_dic[label] = ClassicProb[label]
 
                 for word in words:
                     if word in ClassWordProb[label]:
