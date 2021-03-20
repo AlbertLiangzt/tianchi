@@ -1,7 +1,6 @@
 import numpy as np
 import math
 
-
 # 概率
 # 文章先验概率{'文章类型':先验概率}
 ClassicProb = {}
@@ -13,10 +12,14 @@ DefaultPriorProb = {}
 ResultList = []
 
 # 截取的部分数据
-# file = open("./simple_test.csv", "r")
-# ResultFile = "./simple_res.csv"
-file = open("./test_a.csv", "r")
-ResultFile = "./test_res.csv"
+rsrc_path = "./resource/"
+rslt_path = "./result/"
+# file = open(rsrc_path + "./simple_test.csv", "r")
+# ResultFile = rslt_path + "./simple_res.csv"
+
+
+file = open(rsrc_path + "./test_a.csv", "r")
+ResultFile = rslt_path + "./test_res.csv"
 
 
 def load_model():
@@ -24,9 +27,12 @@ def load_model():
     global ClassicProb
     global DefaultPriorProb
 
-    ClassWordProb = np.load("FileClassWordProb.npy", mmap_mode=None, allow_pickle=True, fix_imports=True, encoding='ASCII').item()
-    ClassicProb = np.load("FileClassicProb.npy", mmap_mode=None, allow_pickle=True, fix_imports=True, encoding='ASCII').item()
-    DefaultPriorProb = np.load("FileDefaultPriorProb.npy", mmap_mode=None, allow_pickle=True, fix_imports=True, encoding='ASCII').item()
+    ClassWordProb = np.load("FileClassWordProb.npy", mmap_mode=None, allow_pickle=True, fix_imports=True,
+                            encoding='ASCII').item()
+    ClassicProb = np.load("FileClassicProb.npy", mmap_mode=None, allow_pickle=True, fix_imports=True,
+                          encoding='ASCII').item()
+    DefaultPriorProb = np.load("FileDefaultPriorProb.npy", mmap_mode=None, allow_pickle=True, fix_imports=True,
+                               encoding='ASCII').item()
 
 
 def evaluate():

@@ -22,8 +22,10 @@ DefaultPriorProb = {}
 
 # 截取的部分数据
 # 训练数据
-# file = open("./simple_train.csv", "r")
-file = open("./train_set.csv", "r")
+rsrc_path = "./resource/"
+rslt_path = "./result/"
+# file = open(rsrc_path+"./simple_train.csv", "r")
+file = open(rsrc_path + "./train_set.csv", "r")
 
 
 # 读取训练数据
@@ -58,10 +60,10 @@ def load_data():
 
             ClassWordCount[label] = len(words) + ClassWordCount[label]
 
-    np.save("FileArticleDic.npy", ArticleDic)
-    np.save("FileClassDic.npy", ClassDic)
-    np.save("FileWordDic.npy", WordDic)
-    np.save("FileClassWordCount.npy", ClassWordCount)
+    np.save(rslt_path + "FileArticleDic.npy", ArticleDic)
+    np.save(rslt_path + "FileClassDic.npy", ClassDic)
+    np.save(rslt_path + "FileWordDic.npy", WordDic)
+    np.save(rslt_path + "FileClassWordCount.npy", ClassWordCount)
 
 
 def calculate_model():
@@ -91,9 +93,9 @@ def calculate_model():
         # step3 各类文章未出现词汇的先验概率
         DefaultPriorProb[label] = DefaultFreq / ClassWordCount[label]
 
-    np.save("FileClassWordProb.npy", ClassWordProb)
-    np.save("FileClassicProb.npy", ClassicProb)
-    np.save("FileDefaultPriorProb.npy", DefaultPriorProb)
+    np.save(rslt_path + "FileClassWordProb.npy", ClassWordProb)
+    np.save(rslt_path + "FileClassicProb.npy", ClassicProb)
+    np.save(rslt_path + "FileDefaultPriorProb.npy", DefaultPriorProb)
 
 
 load_data()
