@@ -1,5 +1,6 @@
 import numpy as np
 import math
+from tqdm import tqdm
 
 # 概率
 # 文章先验概率{'文章类型':先验概率}
@@ -27,16 +28,17 @@ def load_model():
     global ClassicProb
     global DefaultPriorProb
 
-    ClassWordProb = np.load("FileClassWordProb.npy", mmap_mode=None, allow_pickle=True, fix_imports=True,
+    ClassWordProb = np.load(rslt_path + "FileClassWordProb.npy", mmap_mode=None, allow_pickle=True, fix_imports=True,
                             encoding='ASCII').item()
-    ClassicProb = np.load("FileClassicProb.npy", mmap_mode=None, allow_pickle=True, fix_imports=True,
+    ClassicProb = np.load(rslt_path + "FileClassicProb.npy", mmap_mode=None, allow_pickle=True, fix_imports=True,
                           encoding='ASCII').item()
-    DefaultPriorProb = np.load("FileDefaultPriorProb.npy", mmap_mode=None, allow_pickle=True, fix_imports=True,
+    DefaultPriorProb = np.load(rslt_path + "FileDefaultPriorProb.npy", mmap_mode=None, allow_pickle=True,
+                               fix_imports=True,
                                encoding='ASCII').item()
 
 
 def evaluate():
-    for line in file.readlines():
+    for line in tqdm(file.readlines()):
         if len(line) > 20:
             words = line.strip().split(" ")
 
@@ -62,10 +64,16 @@ def output_result():
     outfile = open(ResultFile, 'w')
     outfile.write("label")
     outfile.write('\n')
-    while i < len(ResultList):
+
+    for i in tqdm(range(len(ResultList))):
         outfile.write(str(ResultList[i]))
         outfile.write('\n')
         i += 1
+
+    # while i < tqdm(len(ResultList)):
+    #     outfile.write(str(ResultList[i]))
+    #     outfile.write('\n')
+    #     i += 1
     outfile.close()
 
 

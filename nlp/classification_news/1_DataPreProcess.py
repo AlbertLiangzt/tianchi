@@ -1,4 +1,5 @@
 import numpy as np
+from tqdm import tqdm
 
 # 字典
 # 文章字典{'文章类型':出现次数}
@@ -30,7 +31,7 @@ file = open(rsrc_path + "./train_set.csv", "r")
 
 # 读取训练数据
 def load_data():
-    for line in file.readlines():
+    for line in tqdm(file.readlines()):
         # 删除第一行数据
         if len(line) > 20:
             label_article = line.strip().split("\t")
@@ -83,7 +84,7 @@ def calculate_model():
         ClassicProb[label] = ArticleDic[label] / articleSum
 
     # step2 各类文章中每个词语的先验概率
-    for label in ClassDic:
+    for label in tqdm(ClassDic):
         if label not in ClassWordProb:
             ClassWordProb[label] = {}
 
